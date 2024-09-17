@@ -1,12 +1,12 @@
 '''helps break your code to various smaller portions'''
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login')
 def login():
     '''responsible for user login'''
-    return "<p>login successful</p>"
+    return render_template('login.html')
 
 @auth.route('/logout')
 def logout():
@@ -16,4 +16,4 @@ def logout():
 @auth.route('/sign-up')
 def sign_up():
     '''this function is responsible for user sign-up'''
-    return "<p>sign up successful</p>"
+    return render_template('sign_up.html')
