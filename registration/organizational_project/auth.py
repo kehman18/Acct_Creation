@@ -18,4 +18,17 @@ def logout():
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     '''this function is responsible for user sign-up'''
+    email = request.form.get('email')
+    FirstName  = request.form.get('FirstName')
+    password1 = request.form.get('password1')
+    password2 = request.form.get('password2')
+
+    if len(email) < 2:
+        #if email address does not contain either @gmail.con or @yahoo.com
+        pass
+    if len(FirstName) < 2:
+        pass
+    if len(password1) == len(password2):
+        pass
+    
     return render_template('sign_up.html')
