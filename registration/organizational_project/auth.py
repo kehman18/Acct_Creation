@@ -24,14 +24,14 @@ def sign_up():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
-        if len(email) < 2:
+        if len(email) < 4:
             flash('Email must be greater than 4 characters.', category='error')
         elif len(FirstName) < 2:
             flash('firstname must be greater than 2 characters.', category='error')
+        elif password1 != password2:
+            flash('password do not match', category='error')
         elif len(password1) < 7:
             flash('password must be greater than 6 characters.', category='error')
-        elif len(password1) == len(password2):
-            flash('password do not match', category='error')
         else:
             flash('Account Created Successfully', category='success')
         
