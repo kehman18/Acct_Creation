@@ -1,5 +1,5 @@
 '''helps break your code to various smaller portions'''
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash
 
 auth = Blueprint('auth', __name__)
 
@@ -25,6 +25,7 @@ def sign_up():
 
     if len(email) < 2:
         #if email address does not contain either @gmail.con or @yahoo.com
+        flash('Email must be greater than 4 characters.')
         pass
     if len(FirstName) < 2:
         pass
