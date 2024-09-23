@@ -7,6 +7,10 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     '''responsible for user login'''
+    #check for the email address if available
+    #if yes, check the password.
+    #if yes, login to the acct
+    #if email not found, direct the person to login
     data = request.form
     print(data)
     return render_template('login.html')
