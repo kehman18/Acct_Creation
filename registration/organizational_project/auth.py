@@ -1,6 +1,9 @@
 '''helps break your code to various smaller portions'''
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 import re
+from .models import User
+from . import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint('auth', __name__)
 
@@ -45,7 +48,7 @@ def sign_up():
     '''this function is responsible for user sign-up'''
     if request.method == 'POST':
         email = request.form.get('email')
-        FirstName  = request.form.get('FirstName')
+        first_name  = request.form.get('first_name')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
@@ -55,13 +58,17 @@ def sign_up():
 
         if len(email) < 4:
             flash('Email must be greater than 4 characters.', category='error')
-        elif len(FirstName) < 2:
-            flash('firstname must be greater than 2 characters.', category='error')
+        elif len(first_name) < 2:
+            flash('First name must be greater than 2 characters.', category='error')
         elif password1 != password2:
             flash('password do not match', category='error')
         elif len(password1) < 7:
             flash('password must be greater than 6 characters.', category='error')
         else:
+            new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='scrypt', salt_length=16))
+            db.session.add(new_user)
+            db.session.commit()
             flash('Account Created Successfully', category='success')
+            return redirect(url_for('views.home'))
         
     return render_template('sign_up.html')

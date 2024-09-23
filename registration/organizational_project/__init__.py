@@ -1,4 +1,3 @@
-'''this is a flask app for my server'''
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
@@ -10,7 +9,9 @@ def create_app():
     '''this is the function that should be able to be called from main.py'''
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'love'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{path.join(path.dirname(__file__), DB_NAME)}'
+    
     db.init_app(app)
     
     from .auth import auth
@@ -26,7 +27,7 @@ def create_app():
     return app
 
 def create_database(app):
-    with app.app_context():
-        if not path.exists(f'{app.instance_path}/{DB_NAME}'):
+    if not path.exists(path.join(path.dirname(__file__), DB_NAME)):
+        with app.app_context():
             db.create_all()
-        print('Created Database!')
+            print('Created Database!')
