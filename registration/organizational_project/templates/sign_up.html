@@ -2,6 +2,12 @@
 content %}
 <form method="POST">
   <h3 align="center">Sign Up</h3>
+
+  <!-- Error Display -->
+  {% if error %}
+  <div class="alert alert-danger" role="alert">{{ error }}</div>
+  {% endif %}
+
   <div class="form-group">
     <label for="email">Email Address</label>
     <input
@@ -12,6 +18,7 @@ content %}
       placeholder="Enter Email"
     />
   </div>
+
   <div class="form-group">
     <label for="FirstName">First Name</label>
     <input
@@ -22,6 +29,7 @@ content %}
       placeholder="Enter Your First Name"
     />
   </div>
+
   <div class="form-group">
     <label for="password1">Password</label>
     <input
@@ -32,6 +40,7 @@ content %}
       placeholder="Enter Your Password"
     />
   </div>
+
   <div class="form-group">
     <label for="password2">Password (confirm)</label>
     <input
@@ -42,6 +51,7 @@ content %}
       placeholder="Confirm Your Password"
     />
   </div>
+
   <br />
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
