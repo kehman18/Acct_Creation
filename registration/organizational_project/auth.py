@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 import re
 from .models import User
 from . import db
+from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint('auth', __name__)
@@ -10,18 +11,33 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     '''responsible for user login'''
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(str(user.password), str(password)):
+                flash('Log in Successful', category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
+            else:
+                flash('Incorrect Password, try again', category='error')
+        else:
+            flash('User does not exist.', category='error')
     #check for the email address if available
     #if yes, check the password.
     #if yes, login to the acct
     #if email not found, direct the person to login
     data = request.form
-    print(data)
-    return render_template('login.html')
+    return render_template('login.html', user=current_user)
 
 @auth.route('/logout')
+@login_required
 def logout():
     '''responsible for user logout'''
-    return "<p>logout successful</p>"
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 def validate_email(user_email):
     '''this function is to validate the email address of the user'''
@@ -56,7 +72,11 @@ def sign_up():
         if email_validation_result is not None:
             return render_template('sign_up.html', error=email_validation_result)
 
-        if len(email) < 4:
+        user = User.query.filter_by(email=email).first()
+        
+        if user:
+            flash('Email already exists.', category='error')
+        elif len(email) < 4:
             flash('Email must be greater than 4 characters.', category='error')
         elif len(first_name) < 2:
             flash('First name must be greater than 2 characters.', category='error')
@@ -68,7 +88,8 @@ def sign_up():
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='scrypt', salt_length=16))
             db.session.add(new_user)
             db.session.commit()
+            login_user(user, remember=True)
             flash('Account Created Successfully', category='success')
             return redirect(url_for('views.home'))
         
-    return render_template('sign_up.html')
+    return render_template('sign_up.html', user=current_user)
