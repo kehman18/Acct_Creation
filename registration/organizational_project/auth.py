@@ -25,10 +25,6 @@ def login():
                 flash('Incorrect Password, try again', category='error')
         else:
             flash('User does not exist.', category='error')
-    #check for the email address if available
-    #if yes, check the password.
-    #if yes, login to the acct
-    #if email not found, direct the person to login
     data = request.form
     return render_template('login.html', user=current_user)
 
@@ -58,6 +54,7 @@ def validate_email(user_email):
             return 'This email domain is not accepted'
     else:
         return 'Invalid email format'
+    
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
@@ -93,3 +90,9 @@ def sign_up():
             return redirect(url_for('views.home'))
         
     return render_template('sign_up.html', user=current_user)
+
+'''
+1. firt thing i would like to add in future would be to edit the notes already existing.
+2. You wants to add sign with google.
+3. add a password structure to ensure concrete password creation
+'''
