@@ -1,5 +1,8 @@
 '''modules needed for the python main file'''
-from organizational_project import create_app
+try:
+    from organizational_project import create_app
+except ImportError:
+    from . import create_app
 
 app = create_app()
 
