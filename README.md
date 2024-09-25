@@ -17,7 +17,7 @@ acct_creation/
         │   ├───home.html
         │   ├───sign_up.html
         │   ├───login.html
-        │   └───logout.html
+        │   └───base.html
         ├───__init__.py           # Flask app factory and database initialization
         ├───auth.py               # Authentication routes (login, sign-up, logout)
         ├───main.py               # Entry point of the application
