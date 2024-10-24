@@ -134,6 +134,6 @@ pip install flask flask-sqlalchemy flask-login jinja2
 
 For any issues or inquiries, feel free to reach out:
 
-- **Email**: your.email@example.com
-- **Portfolio**: [Your Portfolio](https://rehobothjnr.pythonanywhere.com)
-- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/adekola-p/)
+- **Email**: kehindeadekola96@gmail.com
+- **Portfolio**: [https://rehobothjnr.pythonanywhere.com]
+- **LinkedIn**: [https://www.linkedin.com/in/adekola-p/]
